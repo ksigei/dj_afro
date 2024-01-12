@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+{%load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Your Movie App{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'your_app/css/styles.css' %}">
+    <!-- Add any other common styles or scripts here -->
+</head>
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+                <div class="container">
+                    <!-- Navbar brand/logo -->
+                    <a class="navbar-brand" href="#">Your Logo</a>
+
+                    <!-- Navbar toggle button for small screens -->
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <!-- Navbar items -->
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#">Home</a>
+                            </li>
+                            <!-- Add other navbar items as needed -->
+
+                            <!-- Search bar -->
+                            <li class="nav-item">
+                                <form class="d-flex">
+                                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                    <button class="btn btn-outline-success" type="submit">Search</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Content -->
+        <div class="row mt-5">
+            <div class="col-md-3">
+                <!-- Sidebar content goes here -->
+            </div>
+
+            <div class="col-md-9">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap and other scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Add any additional scripts here -->
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block title %}Movie List{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col">
+            <form class="d-flex" method="get" action="{% url 'movie-list' %}">
+                <input class="form-control me-2" type="search" name="q" value="{{ search_query }}" placeholder="Search" aria-label="Search">
+                <select class="form-select" name="filter_by_genre">
+                    <option value="" {% if not filter_by_genre %}selected{% endif %}>All Genres</option>
+                    {% for genre in genres %}
+                        <option value="{{ genre.id }}" {% if filter_by_genre == genre.id %}selected{% endif %}>
+                            {{ genre.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <button class="btn btn-outline-success" type="submit">
+                    <i class="bi bi-search"></i> 
+                </button>
+
+            </form>
+        </div>
+    </div>
+    <div class="row row-cols-1 row-cols-md-3 g-4 movies">
+        {% for movie in object_list %}
+            <div class="col">
+                <div class="card h-100 shadow movie-card">
+                    <img src="{{ movie.thumbnail.url }}" alt="{{ movie.title }}" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ movie.title }}</h5>
+                        <p class="card-text">
+                            <i class="bi bi-film"></i> <span class="badge bg-info">
+                                {% for genre in movie.genre.all %}
+                                    {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </span>
+                            <i class="bi bi-clock"></i> <span class="badge bg-secondary">{{ movie.duration }} mins</span>
+                        </p>
+                        <p class="card-text small-text">
+                            <i class="bi bi-star-fill"></i> Rating: {{ movie.rating|default:0|floatformat:"2" }} |
+                            <i class="bi bi-heart-fill"></i> Likes: {{ movie.likes }} |
+                            <i class="bi bi-chat-dots"></i> Comments: {{ movie.comments.count }}
+                        </p>
+                        
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'movie-detail' pk=movie.pk %}" class="btn border-primary btn-sm">
+                            <i class="bi bi-info-circle"></i> View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    /* Custom CSS */
+    .small-text {
+        font-size: 0.9rem; /* Adjust the font size as needed */
+    }
+
+    .movies {
+        margin-top: 20px;
+    }
+
+    .movie-card {
+        transition: transform 0.3s ease-in-out;
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+        overflow: hidden;
+        height: 100%;
+    }
+
+    .movie-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-img-top {
+        border-radius: 10px 10px 0 0;
+    }
+
+    .card-title {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    .card-text {
+        margin-bottom: 15px;
+    }
+
+    .card-footer {
+        background-color: #f8f9fa;
+        border-top: 1px solid #dee2e6;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .btn-primary {
+        background-color: #4caf50;
+        border-color: #4caf50;
+    }
+
+    .btn-primary:hover {
+        background-color: #45a049;
+        border-color: #45a049;
+    }
+
+    .form-control {
+        width: 70%;
+    }
+
+</style>    
+{% endblock %}

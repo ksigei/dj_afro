@@ -1,0 +1,298 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}DJ Afro{% endblock %}
+
+{% block content %}
+
+<!-- ======= Hero Section ======= -->
+<section id="hero">
+  <div class="container">
+    <div class="row d-flex align-items-center" data-aos="fade-up">
+      <div class="col-lg-6 py-5 py-lg-0 order-2 order-lg-1">
+        <h1>DJ Afro AKA Kimonda</h1>
+        <h2>
+          <span>Watch</span> the latest movies and TV shows. <span>Anytime</span>, <span>Anywhere</span>. <span>Unlimited</span> entertainment.
+        </h2>
+        <a href="#about" class="btn-get-started scrollto">Discover More</a>
+      </div>
+      <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="fade-up" data-aos-delay="150">
+        <img src="{% static 'img/hero-movie.png' %}" class="img-fluid" alt="Hero Image">
+      </div>
+    </div>
+  </div>
+</section><!-- End Hero -->
+
+<main id="main">
+  <!-- ======= About Section ======= -->
+  <section id="about" class="about section-bg">
+    <div class="container">
+      <div class="row gy-4">
+        <div class="image col-xl-5"></div>
+        <div class="col-xl-7">
+          <div class="content d-flex flex-column justify-content-center ps-0 ps-xl-4">
+            <h3 data-aos="fade-in" data-aos-delay="100">Discover Our Story</h3>
+            <p data-aos="fade-in">
+              They call me DJ Afro, and for years, I've been your guide through the hilarious, action-packed, and tear-jerking world of foreign films, especially those Bollywood blockbusters and Pakistani dramas. Forget subtitles, because with my "asante sana"s and "cheki maneno"s, you'll be following the plot and cracking up even if you don't understand a word!
+
+              It all started in the bustling streets of Nairobi, where VHS tapes were my canvas and laughter was my currency. Now, years later, my voice has become a soundtrack to movie nights across Kenya and Tanzania. But it's not just about the jokes – I want to bring cultures together, one hilarious scene at a time.
+
+              So, buckle up, grab your popcorn, and get ready to experience cinema like never before. This is DJ Afro's world, and you're invited! Dive into our library of narrated movies, join the discussion on our forum, and share your own movie obsessions. Let's keep the laughter rolling, one film at a time!
+            </p>
+            <div class="row gy-4 mt-3">
+              <div class="col-md-6 icon-box" data-aos="fade-up">
+                <i class="uil uil-file"></i>
+                <h4><a href="#">Unleash the Film Fiesta!</a></h4>
+                <p>From Bollywood blockbusters to Pakistani dramas, we've got a collection that'll make you say "asante sana!"</p>
+              </div>
+              <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="100">
+                <i class="uil uil-clock"></i>
+                <h4><a href="#">Stream 'Till You Drop!</a></h4>
+                <p>Watch anytime, anywhere, with no limits. Just grab your popcorn and get ready to laugh 'til you cry!</p>
+              </div>
+              <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="200">
+                <i class="uil uil-award"></i>
+                <h4><a href="#">Quality? Cheki Maneno!</a></h4>
+                <p>We only serve up the best of the best, with crystal-clear visuals and sound that'll make you feel like you're in the movie.</p>
+              </div>
+              <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="300">
+                <i class="uil uil-heart"></i>
+                <h4><a href="#">Movies Are Our Love Language!</a></h4>
+                <p>We're obsessed with bringing you the most entertaining films from around the world, with a Kenyan twist, of course!</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row mt-5">
+              <div class="col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+                <div class="icon-box">
+                  <i class="bx bx-receipt"></i>
+                  <h4 class="title"><a href="">Our Mission</a></h4>
+                  <p class="description">To bring the world together through laughter, one movie at a time.</p>
+                </div>
+              </div>
+              <div class="col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+                <div class="icon-box">
+                  <i class="bx bx-cube-alt"></i>
+                  <h4 class="title"><a href="">Our Vision</a></h4>
+                  <p class="description">To be the world's leading source of entertainment, with a Kenyan twist.</p>
+                </div>
+              </div>
+            </div>
+          </div><!-- End .content-->
+        </div>
+      </div>
+    </div>
+  </section><!-- End About Section -->
+
+  <!-- ======= Movie Portfolio Section ======= -->
+  <section id="portfolio" class="portfolio section-bg">
+    <div class="container">
+      <div class="section-title">
+        <h2 data-aos="fade-in">Movies</h2>
+        <p data-aos="fade-in">Explore our collection of movies.</p>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <ul id="portfolio-flters">
+            <li data-filter="*" class="filter-active">All</li>
+            {% for genre in genres %}
+              <li data-filter=".filter-{{ genre.name|lower }}">{{ genre.name }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <div class="row portfolio-container" data-aos="fade-up">
+        {% for movie in movies %}
+          <div class="col col-lg-4 col-md-4 col-sm-6 portfolio-item filter-{{ movie.genre.name|lower }}">
+            <div class="card h-100 shadow movie-card">
+              <img src="{{ movie.thumbnail.url }}" alt="{{ movie.title }}" class="card-img-top">
+              <div class="card-body">
+                <h5 class="card-title">{{ movie.title }}</h5>
+                <p class="card-text">
+                  <i class="bi bi-film"></i> <span class="badge bg-info">
+                    {% for genre in movie.genre.all %}
+                      {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                  </span>
+                  <i class="bi bi-clock"></i> <span class="badge bg-secondary">{{ movie.duration }} mins</span>
+                </p>
+                <p class="card-text small-text">
+                  <i class="bi bi-star-fill"></i> Rating: {{ movie.rating|default:0|floatformat:"2" }} |
+                  <i class="bi bi-heart-fill"></i> Likes: {{ movie.likes }} |
+                  <i class="bi bi-chat-dots"></i> Comments: {{ movie.comments.count }}
+                </p>
+              </div>
+              <div class="card-footer">
+                <a href="{% url 'movie-detail' pk=movie.pk %}" class="btn border-primary btn-sm">
+                  <i class="bi bi-info-circle"></i> View Details
+                </a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section><!-- End Portfolio Section -->
+
+  <!-- ======= Contact Section ======= -->
+  <section id="contact" class="contact section-bg">
+    <div class="container" data-aos="fade-up">
+      <div class="section-title">
+        <h2>Contact</h2>
+        <p>
+          To get in touch with us, please fill out the form below. We'll get back to you as soon as possible.
+        </p>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="info-box" data-aos="fade-up">
+                <i class="bx bx-map"></i>
+                <h3>Our Address</h3>
+                <p>123, Nairobi, Kenya</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="info-box mt-4" data-aos="fade-up" data-aos-delay="100">
+                <i class="bx bx-envelope"></i>
+                <h3>Email Us</h3>
+                <p>sigeikiprono4@gmail.com<br></p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="info-box mt-4" data-aos="fade-up" data-aos-delay="100">
+                <i class="bx bx-phone-call"></i>
+                <h3>Call Us</h3>
+                <p>0701603105<br>0701603105</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 mt-4 mt-lg-0">
+          <form action="forms/contact.php" method="post" role="form" class="php-email-form w-100" data-aos="fade-up">
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+              </div>
+              <div class="col-md-6 form-group mt-3 mt-md-0">
+                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+              </div>
+            </div>
+            <div class="form-group mt-3">
+              <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+            </div>
+            <div class="form-group mt-3">
+              <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+            </div>
+            <div class="my-3">
+              <div class="loading">Loading</div>
+              <div class="error-message"></div>
+              <div class="sent-message">Your message has been sent. Thank you!</div>
+            </div>
+            <div class="text-center"><button type="submit">Send Message</button></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section><!-- End Contact Section -->
+</main><!-- End #main -->
+
+<style>
+  /* Custom CSS for Movie Cards */
+  .movie-card {
+    transition: transform 0.3s ease-in-out;
+    height: 100%;
+  }
+
+  .movie-card:hover {
+    transform: scale(1.05);
+  }
+
+  .card-img-top {
+    border-radius: 10px 10px 0 0;
+    object-fit: cover;
+    height: 200px; /* Set your preferred height */
+  }
+
+  .card-body {
+    height: 100%;
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  .card-text {
+    margin-bottom: 15px;
+  }
+
+  .card-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .btn-primary {
+    font-size: 0.8rem;
+    padding: 5px 15px;
+    background-color: #4caf50;
+    border-color: #4caf50;
+  }
+
+  .btn-primary:hover {
+    background-color: #45a049;
+    border-color: #45a049;
+  }
+
+  .details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .details p {
+    margin: 0;
+  }
+</style>
+
+<!-- Include jQuery and Isotope library -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/isotope/3.0.6/isotope.pkgd.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    // Function to initialize Isotope with a delay after all images are loaded
+    function initIsotope() {
+      var $grid = $('.portfolio-container').isotope({
+        itemSelector: '.portfolio-item',
+        layoutMode: 'fitRows'
+      });
+    }
+  
+    // Trigger Isotope initialization after all images are loaded
+    $(window).on('load', function () {
+      initIsotope();
+    });
+  
+    // Filter items on button click
+    $('#portfolio-flters li').on('click', function () {
+      var filterValue = $(this).attr('data-filter');
+      $('.portfolio-container').isotope({ filter: filterValue });
+  
+      // Change active class on buttons
+      $('#portfolio-flters li').removeClass('filter-active');
+      $(this).addClass('filter-active');
+    });
+  });
+  
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,329 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ object.title }}{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #f8f9fa;
+        color: #444444;
+    }
+
+    .movie-detail {
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .banner-card {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .banner-img {
+        max-width: 100%;
+        border-radius: 8px 8px 0 0;
+    }
+
+    .card-content {
+        padding: 20px;
+    }
+
+    .quality {
+        background-color: #ffc107;
+        color: #444444;
+        padding: 5px;
+        border-radius: 3px;
+        margin-bottom: 10px;
+    }
+
+    .genre {
+        color: #6c757d;
+    }
+
+    .card-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .card-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .card-info span {
+        color: #6c757d;
+    }
+
+    .card-desc {
+        line-height: 1.5;
+        color: #555;
+    }
+
+    .movie-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-top: 1px solid #dee2e6;
+    }
+
+    .form-group {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .btn {
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        color: #ffffff;
+        background-color: #444444;
+        border-color: #444444;
+        width: 48%;
+        height: 40px;
+        margin-bottom: 10px;
+    }
+
+    .btn-success,
+    .btn-danger {
+        color: #ffffff;
+        width: 48%;
+        height: 40px;
+    }
+
+    .btn-success {
+        background-color: #ffc107;
+        border-color: #ffc107;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .likes {
+        font-size: 18px;
+        font-weight: bold;
+        margin-right: 5px;
+    }
+
+    .comments {
+        background-color: #ffffff;
+        border-radius: 8px;
+        padding: 20px;
+        margin-top: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .comment {
+        border-bottom: 1px solid #dee2e6;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+
+    .comment strong {
+        display: block;
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+
+    .comment p {
+        margin: 0;
+        color: #555;
+    }
+
+    .comment small {
+        color: #6c757d;
+    }
+
+    @media (max-width: 768px) {
+        .movie-actions {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .btn-primary,
+        .btn-success,
+        .btn-danger {
+            width: 100%;
+        }
+    }
+
+    /* Custom CSS for the video player */
+    .custom-video-wrapper {
+        position: relative;
+    }
+
+    .custom-video {
+        width: 100%;
+    }
+
+    .custom-controls {
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .progress {
+        flex-grow: 1;
+        margin: 0 10px;
+    }
+
+    .time {
+        margin: 0 5px;
+    }
+</style>
+
+<div class="container">
+    <div class="movie-detail">
+        <div class="banner">
+            <div class="banner-card">
+                <div class="custom-video-wrapper">
+                    <video id="moviePlayer{{ object.pk }}" class="w-100">
+                        <source src="{{ object.trailer.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="custom-controls">
+                        <button id="playPauseBtn" class="btn btn-primary">
+                            <i id="playPauseIcon" class="bi bi-play"></i>
+                        </button>
+                        <div class="progress">
+                            <div id="progressBar" class="progress-bar" role="progressbar" aria-valuemin="0"
+                                aria-valuemax="100"></div>
+                        </div>
+                        <span id="currentTime" class="time">0:00</span>
+                        <span id="duration" class="time">0:00</span>
+                    </div>
+                </div>
+
+                <div class="card-content">
+                    <div class="quality">{{ object.quality|upper }}</div>
+                    {% if object.genre %}
+                    <span class="genre">Genre:
+                        {% for genre in object.genre.all %}
+                        {{ genre.name }}
+                        {% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <div class="card-title">{{ object.title }}</div>
+                    <div class="card-info">
+                        <span class="duration"><i class="bi bi-clock"></i> {{ object.duration }} mins</span>
+                        <span class="release-date"><i class="bi bi-calendar"></i> {{ object.release_date }}</span>
+                    </div>
+                    <p class="card-desc">{{ object.description }}</p>
+                    <!-- Add other details as needed -->
+                </div>
+            </div>
+        </div>
+
+        <div class="movie-actions mt-4">
+            <!-- Button to watch trailer -->
+            <a href="{{ object.trailer_url }}" class="btn btn-success btn-sm mb-2" target="_blank">
+                <i class="bi bi-play-fill"></i> Watch Trailer
+            </a>
+
+            <a href="{% url 'checkout' movie_id=object.pk %}" class="btn btn-danger btn-sm" target="_blank">
+                <i class="bi bi-film"></i> Watch Full Movie
+            </a>
+
+            <form action="{% url 'movie-detail' pk=object.pk %}" method="post" class="mb-2">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="like">
+                <div class="likes">{{ likes }} <i class="bi bi-heart-fill"></i></div>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-heart"></i> Like</button>
+            </form>
+
+            <form action="{% url 'movie-detail' pk=object.pk %}" method="post" class="mb-2">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="comment">
+                <div class="form-group">
+                    <label for="comment_text">Add a comment:</label>
+                    <textarea id="comment_text" name="comment_text" rows="4" cols="50" class="form-control"
+                        placeholder="Write your comment here"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-chat-dots"></i> Submit Comment</button>
+            </form>
+        </div>
+        <div class="comments mt-4">
+            <h3>Comments <i class="bi bi-chat-dots"></i></h3>
+            {% for comment in comments %}
+            <div class="comment mb-3">
+                <strong>{{ comment.user.username }} <i class="bi bi-person"></i></strong>
+                <p>{{ comment.text }}</p>
+                <small class="text-muted"><i class="bi bi-clock"></i> {{ comment.created_at }}</small>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .video-container {
+        position: relative;
+    }
+
+    .video-controls {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: space-between;
+        padding: 5px;
+    }
+
+    .video-controls button {
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 1.5em;
+        cursor: pointer;
+    }
+
+    .volume-range {
+        width: 70px;
+    }
+</style>
+
+<script>
+    // Custom Video Player Script
+    document.addEventListener('DOMContentLoaded', function () {
+        const players = document.querySelectorAll('video');
+
+        players.forEach(player => {
+            const playPauseBtn = player.nextElementSibling.querySelector('.play-pause-btn');
+            const volumeRange = player.nextElementSibling.querySelector('.volume-range');
+
+            playPauseBtn.addEventListener('click', () => {
+                if (player.paused || player.ended) {
+                    player.play();
+                    playPauseBtn.innerHTML = '<i class="bi bi-pause"></i>';
+                } else {
+                    player.pause();
+                    playPauseBtn.innerHTML = '<i class="bi bi-play"></i>';
+                }
+            });
+
+            volumeRange.addEventListener('input', () => {
+                player.volume = volumeRange.value;
+            });
+        });
+    });
+</script>
+
+{% endblock %}
