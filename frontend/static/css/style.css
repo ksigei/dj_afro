@@ -43,7 +43,7 @@ h6 {
   right: 15px;
   bottom: 15px;
   z-index: 99999;
-  background: #213b52;
+  background: #BB322A;
   width: 40px;
   height: 40px;
   border-radius: 50px;
@@ -82,7 +82,7 @@ h6 {
   z-index: 997;
   transition: all 0.5s;
   padding: 16px 0;
-  background: #213b52;
+  background: #BB322A;
 }
 
 #header .logo h1 {
@@ -163,7 +163,7 @@ h6 {
 
 .navbar .getstarted,
 .navbar .getstarted:focus {
-  background: #213b52;
+  background: #BB322A;
   color: #fff;
   padding: 4px 25px 6px 25px;
   margin-left: 30px;
@@ -174,7 +174,7 @@ h6 {
 .navbar .getstarted:hover,
 .navbar .getstarted:focus:hover {
   background: #fdc134;
-  color: #213b52;
+  color: #BB322A;
 }
 
 .navbar .dropdown ul {
@@ -307,7 +307,7 @@ h6 {
 .navbar-mobile a:focus {
   padding: 10px 20px;
   font-size: 15px;
-  color: #213b52;
+  color: #BB322A;
 }
 
 .navbar-mobile a:hover,
@@ -363,8 +363,8 @@ h6 {
 #hero {
   width: 100%;
   padding: 0 0 0 0;
-  background: #213b52;
-  background: linear-gradient(180deg, #213b52 0%, rgb(33, 60, 84) 35%, rgb(32, 69, 100) 100%);
+  background: #BB322A;
+  background: linear-gradient(180deg, #BB322A 0%, rgb(11, 15, 19) 35%, rgb(11, 15, 19) 35%);
 }
 
 #hero h1 {
@@ -383,7 +383,7 @@ h6 {
 }
 
 #hero .btn-get-started {
-  color: #213b52;
+  color: #BB322A;
   border-radius: 50px;
   padding: 8px 35px 10px 35px;
   border: 2px solid #fdc134;
@@ -460,7 +460,7 @@ section {
   padding-bottom: 20px;
   position: relative;
   font-family: "Poppins", sans-serif;
-  color: #213b52;
+  color: #BB322A;
 }
 
 .section-title h2::before {
@@ -570,7 +570,7 @@ section {
 .about .content h3 {
   font-weight: 700;
   font-size: 34px;
-  color: #213b52;
+  color: #BB322A;
 }
 
 .about .content p {
@@ -581,11 +581,11 @@ section {
   font-size: 20px;
   font-weight: 700;
   margin: 5px 0 10px 60px;
-  color: #213b52;
+  color: #BB322A;
 }
 
 .about .content .icon-box h4 a {
-  color: #213b52;
+  color: #BB322A;
   transition: 0.3s;
 }
 
@@ -669,7 +669,7 @@ section {
 }
 
 .services .card-title a {
-  color: #213b52;
+  color: #BB322A;
   transition: 0.3s;
 }
 
@@ -711,7 +711,7 @@ section {
 .features .content h3 {
   font-weight: 700;
   font-size: 26px;
-  color: #213b52;
+  color: #BB322A;
 }
 
 .features .content ul {
@@ -947,7 +947,7 @@ section {
   font-weight: 700;
   margin-bottom: 2px;
   font-size: 18px;
-  color: #213b52;
+  color: #BB322A;
 }
 
 .team .member span {
@@ -1056,7 +1056,7 @@ section {
 }
 
 .pricing .get-started-btn {
-  background: #213b52;
+  background: #BB322A;
   display: inline-block;
   padding: 6px 30px;
   border-radius: 20px;
@@ -1276,7 +1276,7 @@ section {
   right: 0;
   top: 0;
   bottom: 0;
-  background: rgba(26, 46, 64, 0.85);
+  background: rgb(11, 15, 19) 35%;
   z-index: 1;
 }
 
